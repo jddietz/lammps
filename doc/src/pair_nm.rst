@@ -1,4 +1,5 @@
 .. index:: pair_style nm/cut
+.. index:: pair_style nm/cut/split
 .. index:: pair_style nm/cut/coul/cut
 .. index:: pair_style nm/cut/coul/long
 .. index:: pair_style nm/cut/omp
@@ -9,6 +10,11 @@ pair_style nm/cut command
 =========================
 
 Accelerator Variants: *nm/cut/omp*
+
+pair_style nm/cut/split command
+===============================
+
+Accelerator Variants:*nm/cut/split/omp*
 
 pair_style nm/cut/coul/cut command
 ==================================
@@ -27,13 +33,15 @@ Syntax
 
    pair_style style args
 
-* style = *nm/cut* or *nm/cut/coul/cut* or *nm/cut/coul/long*
+* style = *nm/cut* or *nm/cut/split* or *nm/cut/coul/cut* or *nm/cut/coul/long*
 * args = list of arguments for a particular style
 
   .. parsed-literal::
 
        *nm/cut* args = cutoff
          cutoff = global cutoff for Pair interactions (distance units)
+       *nm/cut/split* args = cutoff
+	 cutoff = global cutoff for Pair interactions (distance units)
        *nm/cut/coul/cut* args = cutoff (cutoff2)
          cutoff = global cutoff for Pair (and Coulombic if only 1 arg) (distance units)
          cutoff2 = global cutoff for Coulombic (optional) (distance units)
@@ -49,6 +57,10 @@ Examples
    pair_style nm/cut 12.0
    pair_coeff * * 0.01 5.4 8.0 7.0
    pair_coeff 1 1 0.01 4.4 7.0 6.0
+
+   pair_style nm/cut/split 1.12246
+   pair_coeff 1 1 1.0 1.1246 12 6
+   pair_coeff * * 1.0 1.1246 11 6
 
    pair_style nm/cut/coul/cut 12.0 15.0
    pair_coeff * * 0.01 5.4 8.0 7.0
@@ -73,6 +85,8 @@ interaction has the following form:
 
 where :math:`r_c` is the cutoff.
 
+Style *nm/cut/split* applies the standard LJ (6-12) potential abouve :math:`2^\frac{1}{6} \sigma`.
+ 
 Style *nm/cut/coul/cut* adds a Coulombic pairwise interaction given by
 
 .. math::
